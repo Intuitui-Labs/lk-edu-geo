@@ -1,28 +1,42 @@
 {
   "name": "@intuitui-labs/lk-edu-geo",
   "version": "1.0.1",
-  "description": "Sri Lanka educational and administrative geo data",
+  "description": "Sri Lanka educational zones, districts, provinces, and GN divisions open dataset and validation engine.",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "import": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "types": "./src/*.ts",
-      "import": "./src/*.js",
-      "default": "./src/*.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "./dist/index.cjs",
+  "sideEffects": false,
+  "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "data"
+    "data",
+    "README.md",
+    "package.json"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./data/*": "./data/*",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true}); fs.rmSync('node_modules',{recursive:true,force:true})\"",
+    "prepublishOnly": "pnpm run check-types && pnpm run test && pnpm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/intuitui-labs/lk-edu-geo.git"
+  },
   "keywords": [
     "sri-lanka",
     "lk",
@@ -34,53 +48,12 @@
     "gn-divisions",
     "educational-zones"
   ],
-  "packageManager": "pnpm@12.1.0",
-  "scripts": {
-    "build": "node ../../scripts/run-and-report.mjs --cmd \"pnpm exec tsup src/index.ts --format esm,cjs --dts --clean\" --name \"packages_lk-edu-geo-build\"",
-    "test": "node ../../scripts/run-and-report.mjs --cmd \"vitest run\" --name \"packages_lk-edu-geo-test\"",
-    "validate": "node ../../scripts/run-and-report.mjs --cmd \"pnpm exec tsx scripts/validate.ts\" --name \"packages_lk-edu-geo-validate\"",
-    "lint": "node ../../scripts/run-and-report.mjs --cmd \"pnpm run lint:biome && pnpm run lint:eslint\" --name \"packages_lk-edu-geo-lint\"",
-    "check-types": "node ../../scripts/run-and-report.mjs --cmd \"node --max-old-space-size=4096 ../../node_modules/typescript/bin/tsc --build --noEmit\" --name \"packages_lk-edu-geo-check-types\"",
-    "import:xlsx": "node ../../scripts/run-and-report.mjs --cmd \"pnpm exec tsx scripts/import-xlsx.ts\" --name \"packages_lk-edu-geo-import_xlsx\"",
-    "import:pdf": "node ../../scripts/run-and-report.mjs --cmd \"pnpm exec tsx scripts/import-pdf.ts\" --name \"packages_lk-edu-geo-import_pdf\"",
-    "lint:biome": "node ../../scripts/run-and-report.mjs --cmd \"node ../../scripts/scoped-biome.mjs\" --name \"packages_lk-edu-geo-lint_biome\"",
-    "lint:eslint": "node ../../scripts/run-and-report.mjs --cmd \"eslint .\" --name \"packages_lk-edu-geo-lint_eslint\"",
-    "format": "node ../../scripts/run-and-report.mjs --cmd \"node ../../scripts/scoped-biome.mjs --write\" --name \"packages_lk-edu-geo-format\"",
-    "check-cycles": "node ../../scripts/run-and-report.mjs --cmd \"node ../../scripts/refactor/sovereign-cycle-checker.mjs\" --name \"packages_lk-edu-geo-check-cycles\"",
-    "test:watch": "node ../../scripts/run-and-report.mjs --cmd \"vitest\" --name \"packages_lk-edu-geo-test_watch\"",
-    "test:ui": "node ../../scripts/run-and-report.mjs --cmd \"vitest --ui\" --name \"packages_lk-edu-geo-test_ui\"",
-    "clean": "node ../../scripts/run-and-report.mjs --cmd \"rm -rf .turbo node_modules dist\" --name \"packages_lk-edu-geo-clean\""
-  },
+  "author": "Intuitui Labs & Neev Foundation",
+  "license": "MIT",
   "devDependencies": {
-    "@nishansanjuka/srilanka_geographics": "^0.0.1",
-    "@repo/core": "workspace:*",
-    "@repo/eslint-config": "workspace:^",
-    "@repo/typescript-config": "workspace:*",
-    "@types/glob": "^9.0.0",
-    "@types/node": "^25.9.5",
-    "eslint": "^10.9.1",
-    "glob": "^13.0.6",
-    "tsup": "^8.5.1",
-    "tsx": "^4.23.12",
-    "typescript": "rc",
-    "vite-tsconfig-paths": "^6.1.1",
-    "vitest": "^4.1.11",
-    "xlsx": "^0.18.5"
-  },
-  "_originalScripts": {
-    "build": "pnpm exec tsup src/index.ts --format esm,cjs --dts --clean",
-    "test": "vitest run",
-    "validate": "pnpm exec tsx scripts/validate.ts",
-    "lint": "pnpm run lint:biome && pnpm run lint:eslint",
-    "check-types": "node --max-old-space-size=4096 ../../node_modules/typescript/bin/tsc --build --noEmit",
-    "import:xlsx": "pnpm exec tsx scripts/import-xlsx.ts",
-    "import:pdf": "pnpm exec tsx scripts/import-pdf.ts",
-    "lint:biome": "node ../../scripts/scoped-biome.mjs",
-    "lint:eslint": "eslint .",
-    "format": "node ../../scripts/scoped-biome.mjs --write",
-    "check-cycles": "node ../../scripts/refactor/sovereign-cycle-checker.mjs",
-    "test:watch": "vitest",
-    "test:ui": "vitest --ui",
-    "clean": "rm -rf .turbo node_modules dist"
+    "@types/node": "^24.13.5",
+    "@vitest/coverage-v8": "^5.0.1",
+    "typescript": "7.0.2",
+    "vitest": "^5.0.1"
   }
 }
