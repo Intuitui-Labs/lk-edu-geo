@@ -1,6 +1,6 @@
 {
   "name": "@intuitui-labs/lk-edu-geo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sri Lanka educational zones, districts, provinces, and GN divisions open dataset and validation engine.",
   "type": "module",
   "sideEffects": false,
@@ -27,8 +27,9 @@
     "check-types": "tsc --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "test:artifact": "vitest run test/dist-artifact.test.ts",
     "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true}); fs.rmSync('node_modules',{recursive:true,force:true})\"",
-    "prepublishOnly": "pnpm run check-types && pnpm run test && pnpm run build"
+    "prepublishOnly": "pnpm run check-types && pnpm run build && pnpm run test"
   },
   "publishConfig": {
     "access": "public"

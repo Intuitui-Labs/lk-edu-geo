@@ -26,3 +26,8 @@ jobs:
       - run: pnpm run check-types
       - run: pnpm run test:coverage
       - run: pnpm run build
+
+      # Guards the published ESM artifact against defects that only appear once
+      # dist/ is loaded by a real Node runtime (e.g. missing JSON import
+      # attributes). Source-level tests run through Vite and cannot catch these.
+      - run: pnpm run test:artifact

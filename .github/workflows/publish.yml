@@ -25,8 +25,10 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check-types
-      - run: pnpm run test
+      # Build before test so the dist artifact guard below has a real artifact.
       - run: pnpm run build
+      - run: pnpm run test
+      - run: pnpm run test:artifact
 
       - name: Publish Package
         run: npm publish --access public --provenance

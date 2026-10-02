@@ -1,0 +1,36 @@
+# Normalize text files to LF in the repository and working tree so contributors
+# on Windows, Linux and macOS produce identical bytes for the same content.
+* text=auto eol=lf
+
+# These must keep CRLF: cmd.exe only parses CRLF batch files correctly.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Keep LF: these are executed by sh/bash/husky, where CRLF breaks them.
+*.sh text eol=lf
+.husky/* text eol=lf
+
+# Lockfiles stay LF so diffs are stable across platforms.
+pnpm-lock.yaml text eol=lf
+package-lock.json text eol=lf
+yarn.lock text eol=lf
+
+# Generated datasets and coverage output are not worth diffing.
+dist/** -diff
+coverage/** -diff
+*.lcov -diff
+
+# Binary assets.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.gz binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary

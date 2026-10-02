@@ -1,4 +1,4 @@
-import dataRaw from './data/lk-edu-data.json';
+import dataRaw from './data/lk-edu-data.json' with { type: 'json' };
 
 import type {
   District,
