@@ -49,7 +49,7 @@
     "gn-divisions",
     "educational-zones"
   ],
-  "author": "Intuitui Labs & Neev Foundation",
+  "author": "Intuitui Labs",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^26.6.3",
